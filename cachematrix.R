@@ -7,15 +7,15 @@
 
 #This function creates a matrix with a special object .
 makeCacheMatrix <- function(x = matrix()) {
-    inv <- NULL
-    set <- function(y) {
-        x <<- y
-        inv <<- NULL
-    }
-    get <- function() x
-    setinverse <- function(inverse) inv <<- inverse
-    getinverse <- function() inv
-    list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
+  invrs <- NULL
+  set <- function(y) {
+    x <<- y
+    invrs <<- NULL
+  }
+  get <- function() x
+  setinverse <- function(inverse) invrs <<- inverse
+  getinverse <- function() invrs
+  list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
 }
 
 
@@ -25,13 +25,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 cacheSolve <- function(x, ...) {
-    inv <- x$getinverse()
-    if(!is.null(inv)) {
-        message("getting cached data.")
-        return(inv)
-    }
-    data <- x$get()
-    inv <- solve(data)
-    x$setinverse(inv)
-    inv
+  invrs <- x$getinverse()
+  if(!is.null(invrs)) {
+    message("getting data from cache.")
+    return(invrs)
+  }
+  data <- x$get()
+  invrs <- solve(data)
+  x$setinverse(invrs)
+  invrs
 }
+
